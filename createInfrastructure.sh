@@ -28,9 +28,10 @@ docker run \
     -e ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET \
     -e ARM_TENANT_ID=$ARM_TENANT_ID \
     -e STATE_BLOBACCESSKEY=$STATE_BLOBACCESSKEY \
-    -e TF_VAR_environment=$TF_VAR_environment\
-    -e TF_VAR_developergroup=$TF_VAR_developergroup\
-    -e TF_VAR_spigroup=$TF_VAR_spigroup\
+    -e TF_VAR_environment=$TF_VAR_environment \
+    -e TF_VAR_developergroup=$TF_VAR_developergroup \
+    -e TF_VAR_spigroup=$TF_VAR_spigroup \
+    -e TF_VAR_vpc_adress_space=$TF_VAR_VPC_ADRESS_SPACE \
     -v "$(pwd)"/:/workspace \
     -w /workspace \
     hashicorp/terraform:$TERRAFORMVERSION \

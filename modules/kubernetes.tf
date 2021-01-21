@@ -34,7 +34,19 @@ resource "azurerm_role_assignment" "allowAksToPullFromAcr" {
   skip_service_principal_aad_check = true
 }
 
+### NETWORK
+resource "azurerm_subnet" "aksSubnet" {
+  name                 = "tc-showcase-${var.environment}-aks"
+  resource_group_name  = azurerm_resource_group.resourceGroup.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = var.vpc_adress_space
+}
 
+resource "azurerm_role_assignment" "allowAksSpiToContributeAksSubnet" {
+  scope                = azurerm_subnet.aksSubnet.id
+  role_definition_name = "Contributor"
+  principal_id         = azuread_service_principal.aksSpi.object_id
+}
 
 # resource "azurerm_kubernetes_cluster" "k8s" {
 #     name                = "k8s-${azurerm_resource_group.resourceGroup.name}"
@@ -60,10 +72,5 @@ resource "azurerm_role_assignment" "allowAksToPullFromAcr" {
 #     service_principal {
 #         client_id     = azuread_application.aksApp.application_id
 #         client_secret = random_string.aksSpiPasswordGen.result
-#     }
-
-#     lifecycle {
-# #        prevent_destroy = true
-#         ignore_changes = ["default_node_pool"]
 #     }
 # }

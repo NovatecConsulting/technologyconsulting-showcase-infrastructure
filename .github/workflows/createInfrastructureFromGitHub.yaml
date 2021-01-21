@@ -23,6 +23,7 @@ jobs:
           TF_VAR_storage_account_name: 'tcshowcasecommonstorage'
           TF_VAR_developergroup: ${{ secrets.TC_SHOWCASE_ARM_DEVELOPERGROUP_ID }}
           TF_VAR_spigroup: ${{ secrets.TC_SHOWCASE_ARM_SPIGROUP_ID }}
+          TF_VAR_VPC_ADRESS_SPACE: '172.18.1.0/24'
           TF_VAR_environment: 'test'
           TF_ACTION: 'apply'
         run: ./createInfrastructure.sh

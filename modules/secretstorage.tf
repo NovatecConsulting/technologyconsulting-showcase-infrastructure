@@ -40,9 +40,4 @@ resource "azurerm_key_vault" "vault" {
     default_action = "Allow"
     bypass         = "AzureServices"
   }
-
-  lifecycle {
-#        prevent_destroy = true
-        ignore_changes = ["sku_name"]
-    }
 }
