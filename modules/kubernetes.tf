@@ -48,29 +48,29 @@ resource "azurerm_role_assignment" "allowAksSpiToContributeAksSubnet" {
   principal_id         = azuread_service_principal.aksSpi.object_id
 }
 
-# resource "azurerm_kubernetes_cluster" "k8s" {
-#     name                = "k8s-${azurerm_resource_group.resourceGroup.name}"
-#     location            = azurerm_resource_group.resourceGroup.location
-#     resource_group_name = azurerm_resource_group.resourceGroup.name
-#     dns_prefix          = "k8s-${azurerm_resource_group.resourceGroup.name}"
-#     kubernetes_version  = "1.18.14"
+resource "azurerm_kubernetes_cluster" "k8s" {
+    name                = "k8s-${azurerm_resource_group.resourceGroup.name}"
+    location            = azurerm_resource_group.resourceGroup.location
+    resource_group_name = azurerm_resource_group.resourceGroup.name
+    dns_prefix          = "k8s-${azurerm_resource_group.resourceGroup.name}"
+    kubernetes_version  = "1.18.14"
 
 
-#     default_node_pool {
-#         name       = "default"
-#         node_count = 1
-#         vm_size    = "Standard_D2_v2"
-#     }
+    default_node_pool {
+        name       = "default"
+        node_count = 1
+        vm_size    = "Standard_D2_v2"
+        vnet_subnet_id  = azurerm_subnet.aksSubnet.id
+    }
 
-#     addon_profile {
-#         oms_agent {
-#         enabled                    = true
-#         log_analytics_workspace_id = azurerm_log_analytics_workspace.k8sanalyticsworkspace.id
-#         }
-#     }
+    addon_profile {
+        oms_agent {
+            enabled = false
+        }
+    }
 
-#     service_principal {
-#         client_id     = azuread_application.aksApp.application_id
-#         client_secret = random_string.aksSpiPasswordGen.result
-#     }
-# }
+    service_principal {
+        client_id     = azuread_application.aksApp.application_id
+        client_secret = random_string.aksSpiPasswordGen.result
+    }
+}
