@@ -74,3 +74,36 @@ resource "azurerm_kubernetes_cluster" "k8s" {
         client_secret = random_string.aksSpiPasswordGen.result
     }
 }
+
+
+provider "kubernetes" {
+    load_config_file       = false
+    host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
+    client_certificate     = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)
+    client_key             = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_key)
+    cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
+}
+
+resource "kubernetes_namespace" "orderdomainNamespace" {
+  metadata {
+    name = "orderdomain"
+  }
+}
+
+resource "kubernetes_namespace" "supplierdomainNamespace" {
+  metadata {
+    name = "supplierdomain"
+  }
+}
+
+resource "kubernetes_namespace" "manufacturedomainNamespace" {
+  metadata {
+    name = "manufacturedomain"
+  }
+}
+
+resource "kubernetes_namespace" "integrationdomainNamespace" {
+  metadata {
+    name = "integrationdomain"
+  }
+}
