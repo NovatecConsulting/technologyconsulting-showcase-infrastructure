@@ -8,7 +8,7 @@ resource "random_string" "dbPasswordGen" {
 }
 
 resource "azurerm_postgresql_server" "pgdatabaseserver" {
-    name                = "${var.environment}-psql"
+    name                = "tc-showcase-${var.environment}-psql"
     location            = azurerm_resource_group.resourceGroup.location
     resource_group_name = azurerm_resource_group.resourceGroup.name
 
