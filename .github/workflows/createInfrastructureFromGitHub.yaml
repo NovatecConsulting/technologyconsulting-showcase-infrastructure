@@ -1,0 +1,28 @@
+name: Build infrastructure
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Run Terraform
+        env:
+          ARM_CLIENT_ID: ${{ secrets.TC_SHOWCASE_ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.TC_SHOWCASE_ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.TC_SHOWCASE_ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.TC_SHOWCASE_ARM_TENANT_ID }}
+          STATE_BLOBACCESSKEY: ${{ secrets.TC_SHOWCASE_BLOBACCESSKEY }}
+          TF_VAR_storage_account_name: 'tcshowcasecommonstorage'
+          TF_VAR_developergroup: ${{ secrets.TC_SHOWCASE_ARM_DEVELOPERGROUP_ID }}
+          TF_VAR_spigroup: ${{ secrets.TC_SHOWCASE_ARM_SPIGROUP_ID }}
+          TF_VAR_environment: 'test'
+          TF_ACTION: 'apply'
+        run: ./createInfrastructure.sh
