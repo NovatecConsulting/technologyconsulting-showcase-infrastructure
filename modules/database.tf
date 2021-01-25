@@ -69,3 +69,8 @@ resource "azurerm_key_vault_secret" "azurekeyvaultpgdatabasepw_user" {
   key_vault_id = azurerm_key_vault.vault.id
 }
 
+resource "azurerm_key_vault_secret" "azurekeyvaultpgdatabase_fqdn" {
+  name         = "database-fqdn"
+  value        = azurerm_postgresql_server.pgdatabaseserver.fqdn
+  key_vault_id = azurerm_key_vault.vault.id
+}

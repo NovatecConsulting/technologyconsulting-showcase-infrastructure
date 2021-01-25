@@ -75,12 +75,23 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     }
 }
 
+# PROVIDER
 provider "kubernetes" {
-    load_config_file       = false
+#    load_config_file       = false
     host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
     client_certificate     = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)
     client_key             = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_key)
     cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
+}
+
+provider "helm" {
+  kubernetes {
+#    load_config_file       = false
+    host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
+    client_certificate     = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_certificate)
+    client_key             = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.client_key)
+    cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
+  }
 }
 
 # NAMESPACES
@@ -110,11 +121,17 @@ resource "kubernetes_namespace" "integrationdomainNamespace" {
 
 # INGRESS
 resource "azurerm_public_ip" "kubernetes_cluster_primary_ingress_ip" {
-  name                         = "${var.produkt}-${var.stage}-primary-ingress-ip"
+  name                         = "tc-showcase-${var.environment}-primary-ingress-ip"
   resource_group_name          = azurerm_resource_group.resourceGroup.name
   location                     = azurerm_resource_group.resourceGroup.location
   allocation_method            = "Static"
   sku                          = "Standard"
+}
+
+resource "azurerm_role_assignment" "allowAksSpiToContributeIngressIp" {
+  scope                = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.id
+  role_definition_name = "Contributor"
+  principal_id         = azuread_service_principal.aksSpi.object_id
 }
 
 resource "kubernetes_namespace" "nginxNamespace" {
