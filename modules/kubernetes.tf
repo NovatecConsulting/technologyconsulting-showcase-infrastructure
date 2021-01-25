@@ -75,7 +75,6 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     }
 }
 
-
 provider "kubernetes" {
     load_config_file       = false
     host                   = azurerm_kubernetes_cluster.k8s.kube_config.0.host
@@ -84,6 +83,7 @@ provider "kubernetes" {
     cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.k8s.kube_config.0.cluster_ca_certificate)
 }
 
+# NAMESPACES
 resource "kubernetes_namespace" "orderdomainNamespace" {
   metadata {
     name = "orderdomain"
@@ -106,4 +106,42 @@ resource "kubernetes_namespace" "integrationdomainNamespace" {
   metadata {
     name = "integrationdomain"
   }
+}
+
+# INGRESS
+resource "azurerm_public_ip" "kubernetes_cluster_primary_ingress_ip" {
+  name                         = "${var.produkt}-${var.stage}-primary-ingress-ip"
+  resource_group_name          = azurerm_resource_group.resourceGroup.name
+  location                     = azurerm_resource_group.resourceGroup.location
+  allocation_method            = "Static"
+  sku                          = "Standard"
+}
+
+resource "kubernetes_namespace" "nginxNamespace" {
+  metadata {
+    name = "nginx-ingress"
+  }
+}
+
+ resource "helm_release" "nginxIngressController" {
+   name       = "ingress"
+   repository = "https://helm.nginx.com/stable" 
+   chart      = "nginx-ingress"
+   wait       = false
+   namespace  = "nginx-ingress"
+
+   set {
+     name  = "controller.service.loadBalancerIP"
+     value = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.ip_address
+   }
+
+   set {
+     name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-load-balancer-resource-group"
+     value = azurerm_resource_group.resourceGroup.name
+   }
+
+   # it is not possible to use namespace-name in helm-release in order to build TF-execution-tree
+   # kubernetes_namespace does not offer it as attribute
+   # but the namespace must be created before creating helm release
+   depends_on = [kubernetes_namespace.nginxNamespace]
 }
