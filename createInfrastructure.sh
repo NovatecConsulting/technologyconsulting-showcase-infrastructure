@@ -11,7 +11,7 @@ if [[ $TF_ACTION != "plan" ]];then
   TF_OPTIONS="--auto-approve"
 fi
 
-TERRAFORMVERSION=0.13.5
+TERRAFORMVERSION=$TF_VAR_tfversion
 
 docker run \
     -v "$(pwd)"/:/workspace \

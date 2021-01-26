@@ -126,29 +126,29 @@ resource "kubernetes_namespace" "integrationdomainNamespace" {
 }
 
 # INGRESS
-resource "azurerm_public_ip" "kubernetes_cluster_primary_ingress_ip" {
-  name                         = "tc-showcase-${var.environment}-primary-ingress-ip"
+resource "azurerm_public_ip" "kubernetes_cluster_ingress_ip" {
+  name                         = "tc-showcase-${var.environment}-ingress-ip"
   resource_group_name          = azurerm_resource_group.resourceGroup.name
   location                     = azurerm_resource_group.resourceGroup.location
   allocation_method            = "Static"
   sku                          = "Standard"
-  domain_name_label            = "tc-showcase-${var.environment}-primary"
+  domain_name_label            = "tc-showcase-${var.environment}"
 }
 
 resource "azurerm_key_vault_secret" "ingress-ip" {
   name         = "ingress-ip"
-  value        = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.ip_address
+  value        = azurerm_public_ip.kubernetes_cluster_ingress_ip.ip_address
   key_vault_id = azurerm_key_vault.vault.id
 }
 
 resource "azurerm_key_vault_secret" "ingress-fqdn" {
   name         = "ingress-fqdn"
-  value        = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.fqdn
+  value        = azurerm_public_ip.kubernetes_cluster_ingress_ip.fqdn
   key_vault_id = azurerm_key_vault.vault.id
 }
 
 resource "azurerm_role_assignment" "allowAksSpiToContributeIngressIp" {
-  scope                = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.id
+  scope                = azurerm_public_ip.kubernetes_cluster_ingress_ip.id
   role_definition_name = "Contributor"
   principal_id         = azuread_service_principal.aksSpi.object_id
 }
@@ -168,7 +168,7 @@ resource "kubernetes_namespace" "nginxNamespace" {
 
    set {
      name  = "controller.service.loadBalancerIP"
-     value = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.ip_address
+     value = azurerm_public_ip.kubernetes_cluster_ingress_ip.ip_address
    }
 
    set {

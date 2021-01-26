@@ -1,12 +1,11 @@
 name: Build infrastructure
 
-on:
-  workflow_dispatch:
+on: [push, workflow_dispatch] 
     inputs:
       tfAction:
         description: Terraform Action (in lower case) [plan, apply, destroy]
         required: true
-        default: destroy
+        default: apply
       tfVersion:
         description: Terraform Version to use
         required: true
