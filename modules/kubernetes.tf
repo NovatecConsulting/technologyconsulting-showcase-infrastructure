@@ -134,6 +134,12 @@ resource "azurerm_public_ip" "kubernetes_cluster_primary_ingress_ip" {
   sku                          = "Standard"
 }
 
+resource "azurerm_key_vault_secret" "ingress-ip" {
+  name         = "ingress-ip"
+  value        = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.ip_address
+  key_vault_id = azurerm_key_vault.vault.id
+}
+
 resource "azurerm_role_assignment" "allowAksSpiToContributeIngressIp" {
   scope                = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.id
   role_definition_name = "Contributor"
