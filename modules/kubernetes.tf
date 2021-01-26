@@ -132,11 +132,18 @@ resource "azurerm_public_ip" "kubernetes_cluster_primary_ingress_ip" {
   location                     = azurerm_resource_group.resourceGroup.location
   allocation_method            = "Static"
   sku                          = "Standard"
+  domain_name_label            = "tc-showcase-${var.environment}-primary"
 }
 
 resource "azurerm_key_vault_secret" "ingress-ip" {
   name         = "ingress-ip"
   value        = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.ip_address
+  key_vault_id = azurerm_key_vault.vault.id
+}
+
+resource "azurerm_key_vault_secret" "ingress-fqdn" {
+  name         = "ingress-ip"
+  value        = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.fqdn
   key_vault_id = azurerm_key_vault.vault.id
 }
 
