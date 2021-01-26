@@ -65,9 +65,10 @@ resource "azurerm_key_vault_secret" "azurekeyvaultpgdatabasepw_password" {
 
 resource "azurerm_key_vault_secret" "azurekeyvaultpgdatabasepw_user" {
   name         = "database-user"
-  value        = "ntservice"
+  value        = "${azurerm_postgresql_server.pgdatabaseserver.administrator_login}@${azurerm_postgresql_server.pgdatabaseserver.name}"
   key_vault_id = azurerm_key_vault.vault.id
 }
+
 
 resource "azurerm_key_vault_secret" "azurekeyvaultpgdatabase_fqdn" {
   name         = "database-fqdn"
