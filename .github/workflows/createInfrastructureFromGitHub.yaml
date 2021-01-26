@@ -14,15 +14,6 @@ on:
   push:
     branches:
       - main
-    inputs:
-      tfAction:
-        description: Terraform Action (in lower case) [plan, apply, destroy]
-        required: true
-        default: apply
-      tfVersion:
-        description: Terraform Version to use
-        required: true
-        default: 0.14.2  
 jobs:
   build:
 
@@ -46,4 +37,4 @@ jobs:
           TF_VAR_environment: 'test'
           TF_ACTION: ${{ github.event.inputs.tfAction }}
           TF_VAR_tfversion: ${{ github.event.inputs.tfVersion }}
-        run: ./createInfrastructure.sh
+        run:  echo "TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}" >> $GITHUB_ENV && ./createInfrastructure.sh
