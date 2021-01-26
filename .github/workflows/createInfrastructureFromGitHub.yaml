@@ -2,6 +2,8 @@ name: Build infrastructure
 
 on: 
   workflow_dispatch:
+  branches:
+    - main  
     inputs:
       tfAction:
         description: Terraform Action (in lower case) [plan, apply, destroy]
