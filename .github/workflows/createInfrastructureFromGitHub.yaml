@@ -1,15 +1,19 @@
 name: Build infrastructure
 
-on: [push, workflow_dispatch] 
+on: 
+  workflow_dispatch:
     inputs:
       tfAction:
         description: Terraform Action (in lower case) [plan, apply, destroy]
         required: true
-        default: apply
+        default: destroy
       tfVersion:
         description: Terraform Version to use
         required: true
         default: 0.14.2  
+  push:
+  branches:
+    - main      
 
 jobs:
   build:
