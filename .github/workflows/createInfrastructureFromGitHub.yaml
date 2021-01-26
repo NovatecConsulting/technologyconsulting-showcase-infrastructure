@@ -6,7 +6,7 @@ on:
       tfAction:
         description: Terraform Action (in lower case) [plan, apply, destroy]
         required: true
-        default: apply
+        default: plan
       tfVersion:
         description: Terraform Version to use
         required: true
