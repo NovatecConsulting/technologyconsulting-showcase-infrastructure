@@ -1,9 +1,6 @@
 name: Build infrastructure
 
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
-  
   workflow_dispatch:
     inputs:
       tfAction:
@@ -17,6 +14,15 @@ on:
   push:
     branches:
       - main
+    inputs:
+      tfAction:
+        description: Terraform Action (in lower case) [plan, apply, destroy]
+        required: true
+        default: apply
+      tfVersion:
+        description: Terraform Version to use
+        required: true
+        default: 0.14.2  
 jobs:
   build:
 
