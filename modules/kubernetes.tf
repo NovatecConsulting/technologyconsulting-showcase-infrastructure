@@ -141,11 +141,11 @@ resource "azurerm_key_vault_secret" "ingress-ip" {
   key_vault_id = azurerm_key_vault.vault.id
 }
 
-resource "azurerm_key_vault_secret" "ingress-fqdn" {
-  name         = "ingress-ip"
-  value        = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.fqdn
-  key_vault_id = azurerm_key_vault.vault.id
-}
+# resource "azurerm_key_vault_secret" "ingress-fqdn" {
+#   name         = "ingress-ip"
+#   value        = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.fqdn
+#   key_vault_id = azurerm_key_vault.vault.id
+# }
 
 resource "azurerm_role_assignment" "allowAksSpiToContributeIngressIp" {
   scope                = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.id
