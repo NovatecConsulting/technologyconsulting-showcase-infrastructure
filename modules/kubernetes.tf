@@ -113,6 +113,12 @@ resource "kubernetes_namespace" "manufacturedomainNamespace" {
   }
 }
 
+resource "kubernetes_namespace" "driverNamespace" {
+  metadata {
+    name = "driver"
+  }
+}
+
 resource "kubernetes_namespace" "integrationdomainNamespace" {
   metadata {
     name = "integrationdomain"
