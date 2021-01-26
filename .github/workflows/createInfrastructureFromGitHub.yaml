@@ -1,8 +1,16 @@
 name: Build infrastructure
 
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      tfAction:
+        description: Terraform Action (in lower case) [plan, apply, destroy]
+        required: true
+        default: destroy
+      tfVersion:
+        description: Terraform Version to use
+        required: true
+        default: 0.14.2  
 
 jobs:
   build:
@@ -25,5 +33,6 @@ jobs:
           TF_VAR_spigroup: ${{ secrets.TC_SHOWCASE_ARM_SPIGROUP_ID }}
           TF_VAR_VPC_ADRESS_SPACE: '172.18.1.0/24'
           TF_VAR_environment: 'test'
-          TF_ACTION: 'apply'
+          TF_ACTION: ${{ github.event.inputs.tfAction }}
+          TF_VAR_tfversion: ${{ github.event.inputs.tfVersion }}
         run: ./createInfrastructure.sh
