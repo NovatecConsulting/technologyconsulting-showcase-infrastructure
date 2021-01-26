@@ -4,7 +4,7 @@ resource "random_string" "dbPasswordGen" {
   upper   = true
   lower   = true
   number  = true
-  special = true
+  special = false
 }
 
 resource "azurerm_postgresql_server" "pgdatabaseserver" {
