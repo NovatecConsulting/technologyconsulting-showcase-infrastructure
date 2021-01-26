@@ -142,7 +142,7 @@ resource "azurerm_key_vault_secret" "ingress-ip" {
 }
 
 resource "azurerm_key_vault_secret" "ingress-fqdn" {
-  name         = "ingress-ip"
+  name         = "ingress-fqdn"
   value        = azurerm_public_ip.kubernetes_cluster_primary_ingress_ip.fqdn
   key_vault_id = azurerm_key_vault.vault.id
 }
