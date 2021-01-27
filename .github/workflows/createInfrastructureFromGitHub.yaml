@@ -37,4 +37,7 @@ jobs:
           TF_VAR_environment: 'test'
           TF_ACTION: 'plan'
           TF_VAR_tfversion: '0.14.2'  
-        run:  echo "TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}" >> $GITHUB_ENV && ./createInfrastructure.sh
+        run: |
+          echo "TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}" >> $GITHUB_ENV
+          echo "TF_ACTION=${{ github.event.inputs.tfAction || env.TF_ACTION }}" >> $GITHUB_ENV 
+          ./createInfrastructure.sh
