@@ -38,7 +38,7 @@ jobs:
           TF_VAR_tfversion: '0.14.2'
           TF_ACTION: 'plan'  
         run: |
-          TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}" 
-          TF_ACTION=${{ github.event.inputs.tfAction || env.TF_ACTION }}" 
+          TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}
+          TF_ACTION=${{ github.event.inputs.tfAction || env.TF_ACTION }}
           env
           ./createInfrastructure.sh
