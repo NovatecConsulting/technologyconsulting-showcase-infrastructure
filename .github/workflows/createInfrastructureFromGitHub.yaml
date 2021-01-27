@@ -8,7 +8,7 @@ on:
         required: true
         
       tfVersion:
-        description: Terraform Version to use (14.0.2, ... )
+        description: Terraform Version to use (0.14.2, ... )
         required: true
          
   push:
