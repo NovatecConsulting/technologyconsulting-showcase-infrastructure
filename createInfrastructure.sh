@@ -11,12 +11,11 @@ if [[ $TF_ACTION != "plan" ]];then
   TF_OPTIONS="--auto-approve"
 fi
 
-TERRAFORMVERSION=$TF_VAR_tfversion
 
 docker run \
     -v "$(pwd)"/:/workspace \
     -w /workspace \
-    hashicorp/terraform:$TERRAFORMVERSION \
+    hashicorp/terraform:$TF_VAR_tfversion \
         init \
             -backend-config="key=${TF_VAR_environment}-platform.tfstate" \
             -backend-config="access_key=${STATE_BLOBACCESSKEY}" \
@@ -34,6 +33,6 @@ docker run \
     -e TF_VAR_vpc_adress_space=$TF_VAR_VPC_ADRESS_SPACE \
     -v "$(pwd)"/:/workspace \
     -w /workspace \
-    hashicorp/terraform:$TERRAFORMVERSION \
+    hashicorp/terraform:$TF_VAR_tfversion \
         $TF_ACTION \
         $TF_OPTIONS
