@@ -6,11 +6,11 @@ on:
       tfAction:
         description: Terraform Action (in lower case) [plan, apply, destroy]
         required: true
-        default: plan
+        
       tfVersion:
         description: Terraform Version to use
         required: true
-        default: 0.14.2   
+         
   push:
     branches:
       - main
@@ -35,11 +35,11 @@ jobs:
           TF_VAR_spigroup: ${{ secrets.TC_SHOWCASE_ARM_SPIGROUP_ID }}
           TF_VAR_VPC_ADRESS_SPACE: '172.18.1.0/24'
           TF_VAR_environment: 'test'
-          TF_ACTION: 'plan'
-          TF_VAR_tfversion: '0.14.2'  
+          TF_VAR_tfversion: '0.14.2'
+          TF_ACTION: 'plan'  
         run: |
-          echo "TF_VAR_tfversion=${{ env.TF_VAR_tfversion || github.event.inputs.tfVersion }}" >> $GITHUB_ENV
-          echo "TF_ACTION=${{ env.TF_ACTION || github.event.inputs.tfAction }}" >> $GITHUB_ENV 
+          echo "TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}" >> $GITHUB_ENV
+          echo "TF_ACTION=${{ github.event.inputs.tfAction || env.TF_ACTION }}" >> $GITHUB_ENV 
           env && ./createInfrastructure.sh
 
          
