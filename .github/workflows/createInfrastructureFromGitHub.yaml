@@ -8,7 +8,7 @@ on:
         required: true
         
       tfVersion:
-        description: Terraform Version to use
+        description: Terraform Version to use (14.0.2, ... )
         required: true
          
   push:
@@ -40,5 +40,4 @@ jobs:
         run: |
           TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}
           TF_ACTION=${{ github.event.inputs.tfAction || env.TF_ACTION }}
-          env
           ./createInfrastructure.sh
