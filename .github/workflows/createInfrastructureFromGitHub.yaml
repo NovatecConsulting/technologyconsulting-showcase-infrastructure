@@ -23,7 +23,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Run Terraform
+      - name: Set vars 
         env:
           ARM_CLIENT_ID: ${{ secrets.TC_SHOWCASE_ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.TC_SHOWCASE_ARM_CLIENT_SECRET }}
@@ -40,6 +40,11 @@ jobs:
         run: |
           echo "TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}" >> $GITHUB_ENV
           echo "TF_ACTION=${{ github.event.inputs.tfAction || env.TF_ACTION }}" >> $GITHUB_ENV 
-          env && ./createInfrastructure.sh
-
+          
+      - name: Run TF_ACTION
+        run: |
+          TF_VAR_tfversion=${{ env.TF_VAR_tfversion}}
+          TF_ACTION=${{ env.TF_ACTION }}
+          env
+          ./createInfrastructure.sh
          
