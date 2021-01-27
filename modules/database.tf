@@ -26,7 +26,7 @@ resource "azurerm_postgresql_server" "pgdatabaseserver" {
 }
 
 resource "azurerm_postgresql_database" "orderdomain_db" {
-    name                = "orderdomain"
+    name                = "order_db"
     resource_group_name = azurerm_resource_group.resourceGroup.name
     server_name         = azurerm_postgresql_server.pgdatabaseserver.name
     charset             = "UTF8"
@@ -34,7 +34,7 @@ resource "azurerm_postgresql_database" "orderdomain_db" {
 }
 
 resource "azurerm_postgresql_database" "manufacturedomain_db" {
-    name                = "manufacturedomain"
+    name                = "manufacture_db"
     resource_group_name = azurerm_resource_group.resourceGroup.name
     server_name         = azurerm_postgresql_server.pgdatabaseserver.name
     charset             = "UTF8"
@@ -42,7 +42,7 @@ resource "azurerm_postgresql_database" "manufacturedomain_db" {
 }
 
 resource "azurerm_postgresql_database" "supplierdomain_db" {
-    name                = "supplierdomain"
+    name                = "supplier_db"
     resource_group_name = azurerm_resource_group.resourceGroup.name
     server_name         = azurerm_postgresql_server.pgdatabaseserver.name
     charset             = "UTF8"
