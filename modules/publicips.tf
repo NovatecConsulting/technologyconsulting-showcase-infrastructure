@@ -10,13 +10,13 @@ resource "azurerm_public_ip" "publiciporder" {
 
 resource "azurerm_key_vault_secret" "publicipsecretorder" {
   name          = "orderdomain-publicip"
-  value         = azurerm_public_ip.publicip.ip_address
+  value         = azurerm_public_ip.publiciporder.ip_address
   key_vault_id  = azurerm_key_vault.vault.id
 }
 
 resource "azurerm_key_vault_secret" "fqdnorder" {
   name          = "orderdomain-azurefqdn"
-  value         = azurerm_public_ip.publicip.fqdn
+  value         = azurerm_public_ip.publiciporder.fqdn
   key_vault_id  = azurerm_key_vault.vault.id
 }
 
