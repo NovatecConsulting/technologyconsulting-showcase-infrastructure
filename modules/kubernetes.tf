@@ -95,33 +95,21 @@ provider "helm" {
 }
 
 # NAMESPACES
-resource "kubernetes_namespace" "orderdomainNamespace" {
+resource "kubernetes_namespace" "devNamespace" {
   metadata {
-    name = "orderdomain"
+    name = "dev"
   }
 }
 
-resource "kubernetes_namespace" "supplierdomainNamespace" {
+resource "kubernetes_namespace" "stagingNamespace" {
   metadata {
-    name = "supplierdomain"
+    name = "staging"
   }
 }
 
-resource "kubernetes_namespace" "manufacturedomainNamespace" {
+resource "kubernetes_namespace" "prodNamespace" {
   metadata {
-    name = "manufacturedomain"
-  }
-}
-
-resource "kubernetes_namespace" "driverNamespace" {
-  metadata {
-    name = "driver"
-  }
-}
-
-resource "kubernetes_namespace" "integrationdomainNamespace" {
-  metadata {
-    name = "integrationdomain"
+    name = "prod"
   }
 }
 
