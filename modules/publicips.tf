@@ -51,7 +51,7 @@ resource "azurerm_public_ip" "publicipmanu" {
 }
 
 resource "azurerm_key_vault_secret" "publicipsecretmanu" {
-  name          = "manudomain-publicip"
+  name          = "manufacturedomain-publicip"
   value         = azurerm_public_ip.publicipmanu.ip_address
   key_vault_id  = azurerm_key_vault.vault.id
 }
