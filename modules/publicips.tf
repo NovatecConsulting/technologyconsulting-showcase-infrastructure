@@ -70,7 +70,7 @@ resource "azurerm_role_assignment" "allowAksSpiToContributeOrderIp" {
   principal_id         = azuread_service_principal.aksSpi.object_id
 }
 resource "azurerm_role_assignment" "allowAksSpiToContributeSupplierIp" {
-  scope                = azurerm_public_ip.publiciporder.id
+  scope                = azurerm_public_ip.publicipsupplier.id
   role_definition_name = "Contributor"
   principal_id         = azuread_service_principal.aksSpi.object_id
 }
