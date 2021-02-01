@@ -20,6 +20,11 @@ resource "azurerm_key_vault_secret" "fqdnorder" {
   key_vault_id  = azurerm_key_vault.vault.id
 }
 
+resource "azurerm_role_assignment" "allowAksSpiToContributeOrderIp" {
+  scope                = azurerm_public_ip.publiciporder.id
+  role_definition_name = "Contributor"
+  principal_id         = azuread_service_principal.aksSpi.object_id
+}
 
 # --- supplierdomain ip for lbl service type
 resource "azurerm_public_ip" "publicipsupplier" {
@@ -42,6 +47,13 @@ resource "azurerm_key_vault_secret" "fqdnsupplier" {
   value         = azurerm_public_ip.publicipsupplier.fqdn
   key_vault_id  = azurerm_key_vault.vault.id
 }
+
+resource "azurerm_role_assignment" "allowAksSpiToContributeSupplierIp" {
+  scope                = azurerm_public_ip.publicipsupplier.id
+  role_definition_name = "Contributor"
+  principal_id         = azuread_service_principal.aksSpi.object_id
+}
+
 # --- manufacturedomain ip for lbl service type
 resource "azurerm_public_ip" "publicipmanu" {
   name                = "manufacturedomain-publicip-${var.environment}"
@@ -63,17 +75,7 @@ resource "azurerm_key_vault_secret" "fqdnmanu" {
   value         = azurerm_public_ip.publicipmanu.fqdn
   key_vault_id  = azurerm_key_vault.vault.id
 }
-# --- allow aks reading publicips:
-resource "azurerm_role_assignment" "allowAksSpiToContributeOrderIp" {
-  scope                = azurerm_public_ip.publiciporder.id
-  role_definition_name = "Contributor"
-  principal_id         = azuread_service_principal.aksSpi.object_id
-}
-resource "azurerm_role_assignment" "allowAksSpiToContributeSupplierIp" {
-  scope                = azurerm_public_ip.publicipsupplier.id
-  role_definition_name = "Contributor"
-  principal_id         = azuread_service_principal.aksSpi.object_id
-}
+
 resource "azurerm_role_assignment" "allowAksSpiToContributeManuIp" {
   scope                = azurerm_public_ip.publicipmanu.id
   role_definition_name = "Contributor"
