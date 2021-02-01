@@ -11,11 +11,11 @@ resource "azurerm_public_ip" "publicip" {
 resource "azurerm_key_vault_secret" "publicip" {
   name          = "orderdomain-publicip"
   value         = azurerm_public_ip.publicip.ip_address
-  key_vault_id  = data.azurerm_key_vault.vault.id
+  key_vault_id  = azurerm_key_vault.vault.id
 }
 
 resource "azurerm_key_vault_secret" "fqdn" {
   name          = "orderdomain-azurefqdn"
   value         = azurerm_public_ip.publicip.fqdn
-  key_vault_id  = data.azurerm_key_vault.vault.id
+  key_vault_id  = azurerm_key_vault.vault.id
 }
