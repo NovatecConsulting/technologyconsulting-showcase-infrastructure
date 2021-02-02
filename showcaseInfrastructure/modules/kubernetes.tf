@@ -1,7 +1,7 @@
 ### SPI 
 
 resource "azuread_application" "aksApp" {
-  display_name               = "aks-tc-showcase-${var.environment}"
+  display_name               = "tc-showcase-aks-${var.environment}"
   available_to_other_tenants = false
   oauth2_allow_implicit_flow = true
 }
@@ -21,7 +21,7 @@ resource "random_string" "aksSpiPasswordGen" {
 resource "azuread_application_password" "aksSpiSecret" {
   application_object_id = azuread_application.aksApp.id
   value                 = random_string.aksSpiPasswordGen.result
-  description           = "aks-tc-showcase-${var.environment}"
+  description           = "tc-showcase-aks-${var.environment}"
   end_date_relative     = "8760h"
 }
 

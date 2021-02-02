@@ -1,19 +1,12 @@
-name: Build infrastructure
+name: Create Firefighter
 
 on:
   workflow_dispatch:
     inputs:
-      tfAction:
-        description: Terraform Action (in lower case) [plan, apply, destroy]
+      firefighterName:
+        description: Tell me the hero's name
         required: true
-        
-      tfVersion:
-        description: Terraform Version to use (0.14.2, ... )
-        required: true
-         
-  push:
-    branches:
-      - main
+
 jobs:
   build:
 
@@ -31,14 +24,10 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.TC_SHOWCASE_ARM_TENANT_ID }}
           STATE_BLOBACCESSKEY: ${{ secrets.TC_SHOWCASE_BLOBACCESSKEY }}
           TF_VAR_storage_account_name: 'tcshowcasecommonstorage'
-          TF_VAR_developergroup: ${{ secrets.TC_SHOWCASE_ARM_DEVELOPERGROUP_ID }}
-          TF_VAR_spigroup: ${{ secrets.TC_SHOWCASE_ARM_SPIGROUP_ID }}
-          TF_VAR_VPC_ADRESS_SPACE: '172.18.1.0/24'
+          FIREFIGHTERNAME: ${{ github.event.inputs.firefighterName }}
           TF_VAR_environment: 'test'
           TF_VAR_tfversion: '0.14.2'
           TF_ACTION: 'plan'  
         run: |
-          TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}
-          TF_ACTION=${{ github.event.inputs.tfAction || env.TF_ACTION }}
-          ./createInfrastructure.sh
-        working-directory: showcaseInfrastructure
+          ./createFirefighter.sh
+        working-directory: firefighterResources
