@@ -6,6 +6,10 @@ on:
       firefighterName:
         description: Tell me the hero's name
         required: true
+      
+      tfAction:
+        description: Terraform Action (in lower case) [plan, apply, destroy]
+        required: true
 
 jobs:
   build:
@@ -29,5 +33,6 @@ jobs:
           TF_VAR_tfversion: '0.14.2'
           TF_ACTION: 'plan'  
         run: |
+          TF_ACTION=${{ github.event.inputs.tfAction || env.TF_ACTION }}
           ./createFirefighter.sh
         working-directory: firefighterResources
