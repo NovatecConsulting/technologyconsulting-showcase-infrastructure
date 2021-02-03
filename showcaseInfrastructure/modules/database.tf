@@ -26,7 +26,8 @@ resource "azurerm_postgresql_server" "pgdatabaseserver" {
 }
 
 resource "azurerm_postgresql_database" "orderdomain_db" {
-    name                = "order_db"
+    for_each = toset(local.stages)  
+    name                = "order_db-${each.key}"
     resource_group_name = azurerm_resource_group.resourceGroup.name
     server_name         = azurerm_postgresql_server.pgdatabaseserver.name
     charset             = "UTF8"
@@ -34,7 +35,8 @@ resource "azurerm_postgresql_database" "orderdomain_db" {
 }
 
 resource "azurerm_postgresql_database" "manufacturedomain_db" {
-    name                = "manufacture_db"
+    for_each = toset(local.stages)  
+    name                = "manufacture_db-${each.key}"
     resource_group_name = azurerm_resource_group.resourceGroup.name
     server_name         = azurerm_postgresql_server.pgdatabaseserver.name
     charset             = "UTF8"
@@ -42,7 +44,8 @@ resource "azurerm_postgresql_database" "manufacturedomain_db" {
 }
 
 resource "azurerm_postgresql_database" "supplierdomain_db" {
-    name                = "supplier_db"
+    for_each = toset(local.stages)  
+    name                = "supplier_db-${each.key}"
     resource_group_name = azurerm_resource_group.resourceGroup.name
     server_name         = azurerm_postgresql_server.pgdatabaseserver.name
     charset             = "UTF8"
