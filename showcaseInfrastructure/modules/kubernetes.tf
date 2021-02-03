@@ -95,51 +95,20 @@ provider "helm" {
 }
 
 # NAMESPACES
-resource "kubernetes_namespace" "devNamespace" {
+locals {
+  stages = [
+    "dev",
+    "stag",
+    "prod"
+  ]
+}
+resource "kubernetes_namespace" "Namespace" {
+  for_each = toset(local.stages)  
   metadata {
-    name = "dev"
+    name = "${each.key}"
   }
 }
 
-resource "kubernetes_namespace" "stagingNamespace" {
-  metadata {
-    name = "staging"
-  }
-}
-
-resource "kubernetes_namespace" "prodNamespace" {
-  metadata {
-    name = "prod"
-  }
-}
-
-# INGRESS
-resource "azurerm_public_ip" "kubernetes_cluster_ingress_ip" {
-  name                         = "tc-showcase-${var.environment}-ingress-ip"
-  resource_group_name          = azurerm_resource_group.resourceGroup.name
-  location                     = azurerm_resource_group.resourceGroup.location
-  allocation_method            = "Static"
-  sku                          = "Standard"
-  domain_name_label            = "tc-showcase-${var.environment}"
-}
-
-resource "azurerm_key_vault_secret" "ingress-ip" {
-  name         = "ingress-ip"
-  value        = azurerm_public_ip.kubernetes_cluster_ingress_ip.ip_address
-  key_vault_id = azurerm_key_vault.vault.id
-}
-
-resource "azurerm_key_vault_secret" "ingress-fqdn" {
-  name         = "ingress-fqdn"
-  value        = azurerm_public_ip.kubernetes_cluster_ingress_ip.fqdn
-  key_vault_id = azurerm_key_vault.vault.id
-}
-
-resource "azurerm_role_assignment" "allowAksSpiToContributeIngressIp" {
-  scope                = azurerm_public_ip.kubernetes_cluster_ingress_ip.id
-  role_definition_name = "Contributor"
-  principal_id         = azuread_service_principal.aksSpi.object_id
-}
 
 resource "kubernetes_namespace" "nginxNamespace" {
   metadata {
