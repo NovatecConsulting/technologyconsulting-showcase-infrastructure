@@ -22,3 +22,9 @@ resource "azuread_application_password" "firefighterAppSpiSecret" {
   description           = "tc-showcase-firefighter-${var.environment}-${var.firefighterName}"
   end_date_relative     = "2h"
 }
+
+resource "azurerm_key_vault_secret" "azurekeyvaultpgdatabasepw_user" {
+  name         = "firefighter-${var.firefighterName}-credentials"
+  value        = "{ 'clientSecret'='${random_string.firefighterAppSpiPasswordGen.result}', 'clientId'= 'bla'}"
+  key_vault_id = azurerm_key_vault.vault.id
+}
