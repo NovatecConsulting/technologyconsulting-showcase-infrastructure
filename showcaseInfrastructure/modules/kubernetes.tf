@@ -95,13 +95,6 @@ provider "helm" {
 }
 
 # NAMESPACES
-locals {
-  stages = [
-    "dev",
-    "stag",
-    "prod"
-  ]
-}
 resource "kubernetes_namespace" "Namespace" {
   for_each = toset(local.stages)  
   metadata {
