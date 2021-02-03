@@ -32,6 +32,7 @@ resource "azurerm_key_vault_secret" "fqdnorder" {
 }
 
 resource "azurerm_role_assignment" "allowAksSpiToContributeOrderIp" {
+  for_each = toset(local.stages) 
   scope                = azurerm_public_ip.publiciporder[each.key].id
   role_definition_name = "Contributor"
   principal_id         = azuread_service_principal.aksSpi.object_id
