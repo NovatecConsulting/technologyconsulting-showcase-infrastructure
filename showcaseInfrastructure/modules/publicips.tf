@@ -1,6 +1,15 @@
+locals {
+  stages = [
+    "dev",
+    "stag",
+    "prod"
+  ]
+}
+
 # ---- orderdomain ip for lbl service type
 resource "azurerm_public_ip" "publiciporder" {
-  name                = "orderdomain-publicip-${var.environment}"
+  for_each = toset(local.stages)  
+  name                = "${each.key}-orderdomain-publicip-${var.environment}"
   location            = azurerm_resource_group.resourceGroup.location
   resource_group_name = azurerm_resource_group.resourceGroup.name
   allocation_method   = "Static"
@@ -9,13 +18,15 @@ resource "azurerm_public_ip" "publiciporder" {
 }
 
 resource "azurerm_key_vault_secret" "publicipsecretorder" {
-  name          = "orderdomain-publicip"
+  for_each = toset(local.stages) 
+  name          = "${each.key}orderdomain-publicip"
   value         = azurerm_public_ip.publiciporder.ip_address
   key_vault_id  = azurerm_key_vault.vault.id
 }
 
 resource "azurerm_key_vault_secret" "fqdnorder" {
-  name          = "orderdomain-azurefqdn"
+  for_each = toset(local.stages) 
+  name          = "${each.key}orderdomain-azurefqdn"
   value         = azurerm_public_ip.publiciporder.fqdn
   key_vault_id  = azurerm_key_vault.vault.id
 }
