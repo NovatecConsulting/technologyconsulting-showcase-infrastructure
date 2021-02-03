@@ -20,19 +20,19 @@ resource "azurerm_public_ip" "publiciporder" {
 resource "azurerm_key_vault_secret" "publicipsecretorder" {
   for_each = toset(local.stages) 
   name          = "${each.key}orderdomain-publicip"
-  value         = azurerm_public_ip.publiciporder.ip_address
+  value         = azurerm_public_ip.publiciporder[each.key].ip_address
   key_vault_id  = azurerm_key_vault.vault.id
 }
 
 resource "azurerm_key_vault_secret" "fqdnorder" {
   for_each = toset(local.stages) 
   name          = "${each.key}orderdomain-azurefqdn"
-  value         = azurerm_public_ip.publiciporder.fqdn
+  value         = azurerm_public_ip.publiciporder[each.key].fqdn
   key_vault_id  = azurerm_key_vault.vault.id
 }
 
 resource "azurerm_role_assignment" "allowAksSpiToContributeOrderIp" {
-  scope                = azurerm_public_ip.publiciporder.id
+  scope                = azurerm_public_ip.publiciporder[each.key].id
   role_definition_name = "Contributor"
   principal_id         = azuread_service_principal.aksSpi.object_id
 }
