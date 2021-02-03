@@ -105,7 +105,7 @@ locals {
 resource "kubernetes_namespace" "Namespace" {
   for_each = toset(local.stages)  
   metadata {
-    name = "${each.key}"
+    name = each.key
   }
 }
 

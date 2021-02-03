@@ -1,11 +1,3 @@
-locals {
-  stages = [
-    "dev",
-    "stag",
-    "prod"
-  ]
-}
-
 # INGRESS
 resource "azurerm_public_ip" "kubernetes_cluster_ingress_ip" {
 

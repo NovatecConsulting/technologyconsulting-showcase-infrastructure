@@ -9,3 +9,11 @@ variable "spigroup" { }
 variable "developergroup" { }
 
 variable "vpc_adress_space" { }
+
+locals {
+  stages = [
+    "dev",
+    "stag",
+    "prod"
+  ]
+}
