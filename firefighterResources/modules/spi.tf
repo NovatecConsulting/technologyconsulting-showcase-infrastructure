@@ -23,7 +23,7 @@ resource "azuread_application_password" "firefighterAppSpiSecret" {
   end_date_relative     = "2h"
 }
 
-resource "azurerm_key_vault_secret" "azurekeyvaultpgdatabasepw_user" {
+resource "azurerm_key_vault_secret" "firefighter-azure-creds" {
   name         = "firefighter-${var.firefighterName}-credentials"
   value        = "{ 'clientId': '${azuread_service_principal.firefighterAppSpi.object_id}', 'clientSecret': '${random_string.firefighterAppSpiPasswordGen.result}', 'subscriptionId': '${data.azurerm_client_config.current.subscription_id}', 'tenantId': '${data.azurerm_client_config.current.tenant_id}' }"
   key_vault_id = data.azurerm_key_vault.vault.id

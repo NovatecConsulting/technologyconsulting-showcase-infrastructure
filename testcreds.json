@@ -1,0 +1,13 @@
+{
+  "clientId": "<GUID>",
+  "clientSecret": "<GUID>",
+  "subscriptionId": "<GUID>",
+  "tenantId": "<GUID>",
+  (...)
+}
+
+{   'clientId': '65f2a2fa-bb62-4866-b17c-023a9ba84ae1', 
+    'clientSecret': '{ujbAeE_Jybn#?G*7#4MRc%oRYhsAo)Y*4?Sk$nlzRIxL1&cM(?{0j1<Bs@7Zy8&p<Nd2gZhNa:gAW>4tsQ_(>)HJtevDQ0sIDI:z8R+hK8pC&B[3fu[(]]0DL2rAsSp', 
+    'subscriptionId': '95352c54-cee5-4d25-a9a1-0857616d97e5', 
+    'tenantId': '837768d2-29f8-4c82-bd9c-ba95052b2c7f' 
+}
