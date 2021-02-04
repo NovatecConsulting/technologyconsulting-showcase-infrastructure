@@ -1,5 +1,5 @@
 data "azurerm_kubernetes_cluster" "k8s" {
-  name                = "k8s-${azurerm_resource_group.resourceGroup.name}"
+  name                = "k8s-${data.azurerm_resource_group.resourceGroup.name}"
   resource_group_name = data.azurerm_resource_group.resourceGroup.name
 }
 
