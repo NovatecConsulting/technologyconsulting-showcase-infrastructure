@@ -12,7 +12,7 @@ resource "null_resource" "debuggerv2" {
 
 
 resource "helm_release" "sock-shop-helm-chart" {
-  depends_on = [kubernetes_namespace.sock-shop, null_resource.debugger]
+  depends_on = [kubernetes_namespace.sock-shop]
   name       = "sock-shop-helm-chart"
   chart      = "sock-shop-helm/helm-chart"
   namespace  = "sock-shop" 
