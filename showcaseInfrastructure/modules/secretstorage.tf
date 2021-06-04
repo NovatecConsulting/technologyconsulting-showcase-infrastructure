@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "vault" {
-  name                        = "vault-${azurerm_resource_group.resourceGroup.name}"
+  name                        = "vlt-${azurerm_resource_group.resourceGroup.name}"
   location                    = azurerm_resource_group.resourceGroup.location
   resource_group_name         = azurerm_resource_group.resourceGroup.name
   enabled_for_disk_encryption = true

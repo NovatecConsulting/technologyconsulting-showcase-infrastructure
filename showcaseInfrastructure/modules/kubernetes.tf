@@ -53,7 +53,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     location            = azurerm_resource_group.resourceGroup.location
     resource_group_name = azurerm_resource_group.resourceGroup.name
     dns_prefix          = "k8s-${azurerm_resource_group.resourceGroup.name}"
-    kubernetes_version  = "1.18.14"
+    kubernetes_version  = "1.19.11"
 
 
     default_node_pool {
@@ -111,6 +111,9 @@ resource "kubernetes_namespace" "nginxNamespace" {
 # INGRESS
 resource "azurerm_public_ip" "kubernetes_cluster_ingress_ip" {
   name                         = "tc-showcase-${var.environment}-ingress-ip"
+  depends_on = [
+    azurerm_kubernetes_cluster.k8s
+  ]
   resource_group_name          = azurerm_resource_group.resourceGroup.name
   location                     = azurerm_resource_group.resourceGroup.location
   allocation_method            = "Static"
