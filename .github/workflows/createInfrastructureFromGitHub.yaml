@@ -1,3 +1,4 @@
+
 name: Build infrastructure
 
 on:
@@ -9,7 +10,13 @@ on:
         
       tfVersion:
         description: Terraform Version to use (0.14.2, ... )
+        default: "0.14.2"
         required: true
+      
+      tfEnv:
+        description: Environmentname
+        default: "cosmo"
+        required: true 
          
   push:
     branches:
@@ -40,5 +47,6 @@ jobs:
         run: |
           TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}
           TF_ACTION=${{ github.event.inputs.tfAction || env.TF_ACTION }}
+          TF_VAR_environment=${{ github.event.inputs.tfEnv || env.TF_VAR_environment }}
           ./createInfrastructure.sh
         working-directory: showcaseInfrastructure
