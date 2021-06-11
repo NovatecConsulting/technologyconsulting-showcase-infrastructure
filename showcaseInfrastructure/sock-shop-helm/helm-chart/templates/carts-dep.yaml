@@ -26,7 +26,7 @@ spec:
          - name: JAVA_OPTS
            value: {{ .Values.java.options }}
          - name: APPLICATIONINSIGHTS_CONNECTION_STRING
-           value: {{ .Values.azure.app_insights }}
+           value: "InstrumentationKey=${ .Values.azure.app_insights };IngestionEndpoint=https://westeurope-2.in.applicationinsights.azure.com/"
         resources:
           limits:
             cpu: 300m
