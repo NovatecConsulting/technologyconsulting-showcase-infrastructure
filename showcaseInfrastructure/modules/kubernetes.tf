@@ -53,7 +53,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
     location            = azurerm_resource_group.resourceGroup.location
     resource_group_name = azurerm_resource_group.resourceGroup.name
     dns_prefix          = "k8s-${azurerm_resource_group.resourceGroup.name}"
-    kubernetes_version  = "1.18.14"
+    kubernetes_version  = "1.19.11"
 
 
     default_node_pool {
