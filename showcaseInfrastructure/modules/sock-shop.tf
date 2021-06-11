@@ -17,4 +17,10 @@ resource "helm_release" "sock-shop-helm-chart" {
   chart      = "sock-shop-helm/helm-chart"
   namespace  = "sock-shop" 
   timeout    = "500"
+
+  set {
+    name  = "azure.app_insights"
+    value = azurerm_application_insights.app_insights.instrumentation_key
+  }
+
 }

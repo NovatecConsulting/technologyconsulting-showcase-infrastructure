@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: carts
-        image: weaveworksdemos/carts:0.4.8
+        image: novatec/observability-carts:0.4.8
         env:
          {{- if .Values.zipkin.enabled }}
          - name: ZIPKIN
@@ -25,6 +25,8 @@ spec:
          {{- end }}
          - name: JAVA_OPTS
            value: {{ .Values.java.options }}
+         - name: APPLICATIONINSIGHTS_CONNECTION_STRING
+           value: {{ .Values.azure.app_insights }}
         resources:
           limits:
             cpu: 300m
