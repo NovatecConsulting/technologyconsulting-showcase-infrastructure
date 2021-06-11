@@ -15,7 +15,7 @@ on:
       
       tfEnv:
         description: Environmentname
-        default: "cosmo"
+        default: "test"
         required: true 
          
   push:
