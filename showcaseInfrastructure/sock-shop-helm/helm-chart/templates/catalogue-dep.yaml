@@ -18,11 +18,9 @@ spec:
       containers:
       - name: catalogue
         image: weaveworksdemos/catalogue:0.3.5
-        {{- if .Values.zipkin.enabled }}
         env:
-         - name: ZIPKIN
-           value: http://{{ .Values.zipkin.url }}:9411/api/v1/spans
-        {{- end }}
+         - name: SPRING_ZIPKIN_ENABLED
+           value: "false" 
         resources:
           limits:
             cpu: 100m

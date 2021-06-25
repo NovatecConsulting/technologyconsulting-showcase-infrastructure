@@ -31,7 +31,9 @@ spec:
            valueFrom:
              fieldRef:
                apiVersion: v1
-               fieldPath: metadata.name        
+               fieldPath: metadata.name
+         - name: SPRING_ZIPKIN_ENABLED
+           value: "false"  
         resources:
           limits:
             cpu: 500m
