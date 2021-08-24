@@ -19,6 +19,10 @@ module "platform" {
   developergroup       = var.developergroup
   spigroup             = var.spigroup
   vpc_adress_space     = [var.vpc_adress_space]
+  appdynamics_account  = var.appdynamics_account
+  appdynamics_username = var.appdynamics_username
+  appdynamics_password = var.appdynamics_password
+  appdynamics_accessKey = var.appdynamics_accessKey
 }
 
 
