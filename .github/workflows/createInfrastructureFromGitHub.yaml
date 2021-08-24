@@ -34,7 +34,7 @@ jobs:
           TF_VAR_developergroup: ${{ secrets.TC_SHOWCASE_ARM_DEVELOPERGROUP_ID }}
           TF_VAR_spigroup: ${{ secrets.TC_SHOWCASE_ARM_SPIGROUP_ID }}
           TF_VAR_VPC_ADRESS_SPACE: '172.18.1.0/24'
-          TF_VAR_environment: 'appdynamics-cluster-agent'
+          TF_VAR_environment: 'appd'
           TF_VAR_tfversion: '0.14.2'
           TF_ACTION: 'plan'
           TF_VAR_appdynamics_url: https://novatec-nfr.saas.appdynamics.com:443
