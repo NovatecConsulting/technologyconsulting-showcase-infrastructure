@@ -11,24 +11,25 @@ resource "helm_release" "appdynamics-helm-chart" {
   chart      = "appdynamics-charts/cluster-agent"
   namespace  = "appdynamics" 
   timeout    = "500"
-}
 
-set {
+  set {
     name  = "controllerInfo.account"
     value = var.appdynamics_account
+  }
+
+  set {
+      name  = "controllerInfo.username"
+      value = var.appdynamics_username
+  }
+
+  set {
+      name  = "controllerInfo.password"
+      value = var.appdynamics_password
+  }
+      
+  set {
+      name  = "controllerInfo.accessKey"
+      value = var.appdynamics_accessKey
+  }
 }
 
-set {
-    name  = "controllerInfo.username"
-    value = var.appdynamics_username
-}
-
-set {
-    name  = "controllerInfo.password"
-    value = var.appdynamics_password
-        }
-    
-set {
-    name  = "controllerInfo.accessKey"
-    value = var.appdynamics_accessKey
-}
