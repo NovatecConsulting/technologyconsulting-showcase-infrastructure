@@ -18,6 +18,9 @@ variable "appdynamics_password" { }
 
 variable "appdynamics_accessKey" { }
 
+variable "appdynamics_url" {}
+
+
 locals {
   stages = [
     "dev",

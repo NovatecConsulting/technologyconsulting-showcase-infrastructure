@@ -31,5 +31,10 @@ resource "helm_release" "appdynamics-helm-chart" {
       name  = "controllerInfo.accessKey"
       value = var.appdynamics_accessKey
   }
+
+  set {
+      name  = "controllerInfo.url"
+      value = var.appdynamics_url
+  }
 }
 
