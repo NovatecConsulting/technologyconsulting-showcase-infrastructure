@@ -10,6 +10,14 @@ variable "developergroup" { }
 
 variable "vpc_adress_space" { }
 
+variable "appdynamics_account" { }
+
+variable "appdynamics_username" { }
+
+variable "appdynamics_password" { }
+
+variable "appdynamics_accessKey" { }
+
 locals {
   stages = [
     "dev",

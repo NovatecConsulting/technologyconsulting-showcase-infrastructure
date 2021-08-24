@@ -36,7 +36,12 @@ jobs:
           TF_VAR_VPC_ADRESS_SPACE: '172.18.1.0/24'
           TF_VAR_environment: 'cloudy'
           TF_VAR_tfversion: '0.14.2'
-          TF_ACTION: 'plan'  
+          TF_ACTION: 'plan'
+          TF_VAR_appdynamics_url: https://novatec-nfr.saas.appdynamics.com:443
+          TF_VAR_appdynamics_account: ${{ secrets.TC_SHOWCASE_APPDYNAMICS_ACCOUNT }}
+          TF_VAR_appdynamics_username: ${{ secrets.TC_SHOWCASE_APPDYNAMICS_USERNAME }}
+          TF_VAR_appdynamics_ password: ${{ secrets.TC_SHOWCASE_APPDYNAMICS_PASSWORD }}
+          TF_VAR_appdynamics_accessKey: ${{ secrets.TC_SHOWCASE_APPDYNAMICS_ACCESSKEY }}
         run: |
           TF_VAR_tfversion=${{ github.event.inputs.tfVersion || env.TF_VAR_tfversion }}
           TF_ACTION=${{ github.event.inputs.tfAction || env.TF_ACTION }}

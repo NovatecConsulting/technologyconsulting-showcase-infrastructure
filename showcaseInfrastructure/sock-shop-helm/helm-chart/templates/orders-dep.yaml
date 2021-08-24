@@ -25,13 +25,6 @@ spec:
          {{- end }}
          - name: JAVA_OPTS
            value: {{ .Values.java.options }}
-         - name: APPLICATIONINSIGHTS_CONNECTION_STRING
-           value: "InstrumentationKey={{ .Values.azure.app_insights }};IngestionEndpoint=https://westeurope-2.in.applicationinsights.azure.com/"
-         - name: APPLICATIONINSIGHTS_ROLE_NAME
-           valueFrom:
-             fieldRef:
-               apiVersion: v1
-               fieldPath: metadata.name
          - name: SPRING_ZIPKIN_ENABLED
            value: "false"  
         resources:
