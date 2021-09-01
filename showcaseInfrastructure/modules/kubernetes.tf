@@ -19,7 +19,6 @@ resource "random_string" "aksSpiPasswordGen" {
 resource "azuread_application_password" "aksSpiSecret" {
   application_object_id = azuread_application.aksApp.id
   value                 = random_string.aksSpiPasswordGen.result
-  description           = "tc-showcase-aks-${var.environment}"
   end_date_relative     = "8760h"
 }
 
