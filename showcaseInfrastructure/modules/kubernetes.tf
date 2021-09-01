@@ -5,6 +5,7 @@ resource "azuread_application" "aksApp" {
   web {
     implicit_grant{
       access_token_issuance_enabled = true
+      id_token_issuance_enabled     = true 
     }
   }
 }
