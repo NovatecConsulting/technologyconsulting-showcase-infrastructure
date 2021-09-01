@@ -2,10 +2,11 @@
 
 resource "azuread_application" "aksApp" {
   display_name               = "tc-showcase-aks-${var.environment}"
+  sign_in_audience           = "AzureADMyOrg"
   web {
     implicit_grant{
       access_token_issuance_enabled = true
-      id_token_issuance_enabled     = true 
+      id_token_issuance_enabled     = true
     }
   }
 }
