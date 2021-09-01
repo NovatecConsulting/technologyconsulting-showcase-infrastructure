@@ -2,6 +2,10 @@
 
 resource "azuread_application" "aksApp" {
   display_name               = "tc-showcase-aks-${var.environment}"
+  implicit_grant {
+    access_token_issuance_enabled = true
+  }
+
 }
 
 resource "azuread_service_principal" "aksSpi" {
