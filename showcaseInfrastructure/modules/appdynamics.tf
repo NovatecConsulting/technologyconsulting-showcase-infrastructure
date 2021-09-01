@@ -8,9 +8,15 @@ resource "helm_release" "appdynamics-helm-chart" {
   depends_on = [kubernetes_namespace.appdynamics]
   name       = "appdynamics-helm-chart"
   repository = "https://ciscodevnet.github.io/appdynamics-charts"
-  chart      = "appdynamics-charts/cluster-agent"
+  chart      = "cluster-agent"
   namespace  = "appdynamics" 
   timeout    = "500"
+
+
+set {
+      name  = "controllerInfo.url"
+      value = var.appdynamics_url
+  }
 
   set {
     name  = "controllerInfo.account"
@@ -32,9 +38,5 @@ resource "helm_release" "appdynamics-helm-chart" {
       value = var.appdynamics_accessKey
   }
 
-  set {
-      name  = "controllerInfo.url"
-      value = var.appdynamics_url
-  }
 }
 
