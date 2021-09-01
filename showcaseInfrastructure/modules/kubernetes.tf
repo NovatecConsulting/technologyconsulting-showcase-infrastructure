@@ -2,8 +2,6 @@
 
 resource "azuread_application" "aksApp" {
   display_name               = "tc-showcase-aks-${var.environment}"
-  available_to_other_tenants = false
-  oauth2_allow_implicit_flow = true
 }
 
 resource "azuread_service_principal" "aksSpi" {
